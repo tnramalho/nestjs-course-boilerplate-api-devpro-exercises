@@ -1,4 +1,4 @@
-# nestjs-course-boilerplate-api-devpro-exercises
+# Repository to Receive PR from DevPro NestJS Course
 
 Repository to receive PR from the exercises for the NestJs Course for a boilerplate API
 
