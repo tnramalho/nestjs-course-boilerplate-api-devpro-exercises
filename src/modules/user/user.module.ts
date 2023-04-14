@@ -5,11 +5,14 @@ import { UserRepository } from '../../user/repositories/user-repository';
 import { UserService } from '../../user/services/user.service';
 
 @Module({
-  controllers: [ UserController ],
-  providers: [ UserService, {
-    provide: 'UserRepositoryInterface',
-    useClass: UserRepository
-  }, UserMapper ],
+  controllers: [UserController],
+  providers: [
+    UserService,
+    {
+      provide: 'UserRepositoryInterface',
+      useClass: UserRepository,
+    },
+    UserMapper,
+  ],
 })
-export class UserModule {
-}
+export class UserModule {}

@@ -13,7 +13,7 @@ import { User } from '../entities/User';
 import { UserService } from '../services/user.service';
 import { UuidValidator } from '../shared/validators/uuid.validator';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 

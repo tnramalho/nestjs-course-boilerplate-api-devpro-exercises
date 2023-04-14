@@ -1,4 +1,12 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Length, Max, Min } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Length,
+  Max,
+  Min,
+} from 'class-validator';
 import { CreateUserDtoInterface } from '../shared/interfaces/create-user-dto.interface';
 
 export class CreateUserDto implements CreateUserDtoInterface {
@@ -19,10 +27,10 @@ export class CreateUserDto implements CreateUserDtoInterface {
   @IsNotEmpty()
   @IsNumber()
   @Min(18, {
-    message: 'Minimum age required is 18'
+    message: 'Minimum age required is 18',
   })
   @Max(90, {
-    message: 'Maximum age required is 90'
+    message: 'Maximum age required is 90',
   })
   readonly age: number;
 

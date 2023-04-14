@@ -23,7 +23,9 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   public delete(id: string): string {
-    const userIndex = this.userDocument.findIndex((user) => user.getId === id);
+    const userIndex = this.userDocument.findIndex(
+      (user) => user.getId() === id,
+    );
     if (userIndex < 0) {
       throw new NotFoundException(userIndex, 'User not found');
     }
@@ -37,7 +39,7 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   public findOneById(id: string): User {
-    const user = this.userDocument.find((user) => user.getId === id);
+    const user = this.userDocument.find((user) => user.getId() === id);
     if (!user) {
       throw new NotFoundException(user, 'User not found');
     }
