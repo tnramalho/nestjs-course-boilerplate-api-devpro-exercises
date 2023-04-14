@@ -1,7 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { AppModule } from '../src/modules/app.module';
+import { getCreateUserDto } from './shared/user-builder.spec';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -15,10 +16,17 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('GET /user', async () => {
+    await request(app.getHttpServer())
+      .post('/users')
+      .send(getCreateUserDto())
+      .expect(201);
+
     return request(app.getHttpServer())
-      .get('/')
+      .get('/users')
       .expect(200)
-      .expect('Hello World!');
+      .then((response) => {
+        expect(response.body.length).toBe(1);
+      });
   });
 });
