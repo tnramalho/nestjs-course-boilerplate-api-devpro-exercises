@@ -1,54 +1,42 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { User } from '../entities/User';
-import { UserRepositoryInterface } from '../gateways/user-repository.interface';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserRepositoryInterface } from '../domain/entities/gateways/user-repository.interface';
+import { User } from '../domain/entities/User.entity';
 
+@Injectable()
 export class UserRepository implements UserRepositoryInterface {
-  private readonly userDocument: User[];
+  constructor(
+    @InjectRepository(User) private readonly userDocument: Repository<User>,
+  ) {}
 
-  constructor() {
-    this.userDocument = [];
+  public async create(user: User): Promise<User> {
+    return this.userDocument.save(user);
   }
 
-  public create(user: User): User {
-    const usersEmails = this.findAll().map((user) => user.email);
-    if (usersEmails.includes(user.email)) {
-      throw new BadRequestException('Something bad happened', {
-        cause: new Error(),
-        description: 'Email already registered',
-      });
-    }
-    user.setId();
-    this.userDocument.push(user);
-    return user;
-  }
-
-  public delete(id: string): string {
-    const userIndex = this.userDocument.findIndex(
-      (user) => user.getId() === id,
-    );
-    if (userIndex < 0) {
-      throw new NotFoundException(userIndex, 'User not found');
-    }
-    this.userDocument.splice(userIndex, 1);
+  public async delete(id: string): Promise<string> {
+    const userToDelete = await this.findById(id);
+    await this.userDocument.delete(userToDelete.id);
     return 'User deleted successfully';
   }
 
-  public findAll(): User[] {
-    const users = this.userDocument;
-    return users.length === 0 ? Array.from(users) : users;
+  public async findAll(): Promise<User[]> {
+    return this.userDocument.find({
+      relations: ['userRoles'],
+    });
   }
 
-  public findOneById(id: string): User {
-    const user = this.userDocument.find((user) => user.getId() === id);
+  public async findById(id: string): Promise<User> {
+    const user = await this.userDocument.findOneBy({ id });
     if (!user) {
-      throw new NotFoundException(user, 'User not found');
+      throw new NotFoundException('User not found');
     }
     return user;
   }
 
-  public update(id: string, user: Partial<User>): User {
-    const userToUpdate = this.findOneById(id);
-    Object.assign(userToUpdate, user);
-    return userToUpdate;
+  public async update(id: string, user: Partial<User>): Promise<string> {
+    const userToUpdate = await this.findById(id);
+    await this.userDocument.update(userToUpdate.id, user);
+    return 'User Updated Successfully';
   }
 }

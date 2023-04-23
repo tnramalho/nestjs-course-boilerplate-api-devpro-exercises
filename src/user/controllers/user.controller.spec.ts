@@ -6,10 +6,10 @@ import {
   getUpdateUserDto,
   getUser,
 } from '../../../test/shared/user-builder.spec';
-import { User } from '../entities/User';
+import { User } from '../domain/entities/User.entity';
+import { UserService } from '../domain/services/user.service';
+import { UserMapper } from '../infrastructure/mappers/user.mapper';
 import { UserRepository } from '../repositories/user-repository';
-import { UserService } from '../services/user.service';
-import { UserMapper } from '../shared/mappers/user.mapper';
 import { UserController } from './user.controller';
 
 describe('UserController', () => {

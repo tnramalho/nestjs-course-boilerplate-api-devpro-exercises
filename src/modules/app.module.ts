@@ -1,7 +1,15 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config';
+import { PostgresConfig } from '../shared/config/database/postgres/postgres.config';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
-  imports: [UserModule],
+  imports: [
+    ConfigModule.forRoot({
+      load: [PostgresConfig],
+      isGlobal: true,
+    }),
+    SharedModule,
+  ],
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
-import { User } from '../../src/user/entities/User';
-import { CreateUserDtoInterface } from '../../src/user/shared/interfaces/create-user-dto.interface';
-import { UpdateUserDtoInterface } from '../../src/user/shared/interfaces/update-user-dto.interface';
+import { User } from '../../src/user/domain/entities/User.entity';
+import { CreateUserDtoInterface } from '../../src/user/interfaces/create-user-dto.interface';
+import { UpdateUserDtoInterface } from '../../src/user/interfaces/update-user-dto.interface';
 
 export const getCreateUserDto = (): CreateUserDtoInterface => {
   return {
