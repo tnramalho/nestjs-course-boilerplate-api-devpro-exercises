@@ -8,7 +8,8 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class RoleDto extends CommonEntityDto implements RoleInterface {
   @ApiProperty({
     type: 'string',
-    description: 'Username',
+    description: 'Name of the role',
+    example: 'admin',
   })
   @IsString()
   @IsNotEmpty()

@@ -1,4 +1,3 @@
-export interface UserRoleCreatableInterface {
-  userId: string;
-  roleId: string;
-}
+import { UserRoleInterface } from './user-role.interface';
+export interface UserRoleCreatableInterface
+  extends Pick<UserRoleInterface, 'userId' | 'roleId'> {}

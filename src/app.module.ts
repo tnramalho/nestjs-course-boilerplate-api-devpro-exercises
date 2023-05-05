@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { jwtConfiguration } from 'src/config/jwt.config';
+import { AuthModule } from './auth/auth.module';
 import { serverConfiguration } from './config/server.config';
 import { typeormConfiguration } from './config/typeorm.config';
 import { RoleModule } from './role/role.module';
@@ -13,7 +13,7 @@ import { UsersModule } from './users/users.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [typeormConfiguration, serverConfiguration],
+      load: [typeormConfiguration, serverConfiguration, jwtConfiguration],
     }),
     TypeOrmModule.forRootAsync({
       inject: [typeormConfiguration.KEY],
@@ -24,8 +24,9 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     UserRoleModule,
     RoleModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
