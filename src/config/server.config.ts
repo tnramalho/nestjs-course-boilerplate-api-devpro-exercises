@@ -1,3 +1,4 @@
+import { SERVER_CONFIG } from './../common/constants';
 import { registerAs } from '@nestjs/config';
 
 interface serverOptionsConfig {
@@ -5,8 +6,8 @@ interface serverOptionsConfig {
 }
 
 export const serverConfiguration = registerAs(
-  'server',
+  SERVER_CONFIG,
   (): serverOptionsConfig => ({
-    env: 'development',
+    env: process.env.ENVIRONMENT || 'development',
   }),
 );

@@ -1,3 +1,5 @@
+import { Public } from './../role/decorator/public.decorator';
+import { JwtAuthGuard } from './../auth/guards/jwt-auth-guard';
 import {
   Controller,
   Get,
@@ -7,8 +9,10 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -19,7 +23,9 @@ import { UserRoleDto } from './dto/user-role.dto';
 
 import { UserRoleService } from './user-role.service';
 
-@ApiTags('user-role')
+@ApiTags('User Role')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('user-role')
 export class UserRoleController {
   constructor(private readonly userRoleService: UserRoleService) {}

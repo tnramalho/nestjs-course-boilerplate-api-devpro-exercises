@@ -1,12 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { UserRoleDto } from './user-role.dto';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { IsUUID } from 'class-validator';
 
-export class CreateUserRoleDto {
-  @ApiProperty({ format: 'uuid' })
-  @IsUUID()
-  userId!: string;
-
-  @ApiProperty({ format: 'uuid' })
-  @IsUUID()
-  roleId!: string;
-}
+export class CreateUserRoleDto extends PickType(UserRoleDto, [
+  'userId',
+  'roleId',
+]) {}

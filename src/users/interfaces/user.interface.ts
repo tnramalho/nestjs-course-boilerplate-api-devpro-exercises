@@ -1,4 +1,4 @@
-//import { UserRoleInterface } from 'src/modules/user-role/interfaces';
+import { UserRoleInterface } from './../../user-role/interfaces/user-role.interface';
 
 export interface UserInterface {
   firstName: string;
@@ -7,5 +7,6 @@ export interface UserInterface {
   password: string;
   salt: string;
   active: boolean;
-  //userRoles?: UserRoleInterface[];
+  email: string;
+  userRoles?: UserRoleInterface[];
 }
